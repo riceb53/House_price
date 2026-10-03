@@ -1,0 +1,9 @@
+# Local settings: never commit these
+.env
+
+# Service account key files downloaded from Google Cloud
+houseprice-510122-*.json
+
+# Python and macOS clutter
+__pycache__/
+.DS_Store
