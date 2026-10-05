@@ -47,8 +47,8 @@ We join all four datasets on 5-digit county FIPS codes and the year. Monthly Zil
 
 ### 1. Clone the repository
 ```bash
-git clone https://github.com/ORG/REPO.git
-cd REPO
+git clone https://github.com/riceb53/House_price.git
+cd House_price
 ```
 
 ### 2. Configure environment variables
@@ -79,7 +79,9 @@ Make sure it writes the data in the bucket.
 ## Repository Structure
 ```
 .
-├── your_code.py
+├── permits_apy.py.py
 ├── .env_template
-└── README.md
+└── README.md 
+└── .gitignore
+└── requirements.txt
 ```
