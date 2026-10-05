@@ -5,7 +5,7 @@ We want to see how local weather, unemployment rates and issued housing permits 
 
 | Name | GitHubID | Role / Focus |
 | --- | --- | --- |
-| Mikhail Vostrikov | `https://github.com/riceb53/House_price/tree/mikhail` | Zillow price data, ETL & report lead |
+| Mikhail Vostrikov  | `https://github.com/riceb53/House_price/tree/mikhail` | Zillow price data, ETL & reporting |
 | Gaziz Makhanov | `https://github.com/riceb53/House_price/tree/building-permits` | HUD permits API ingestion & FastAPI endpoints |
 | Jagriti Bisen | `https://github.com/riceb53/House_price/tree/feature/noaa-ingest` | NOAA weather data ingestion & Streamlit app dashboard |
 | Armand Domalewski | `https://github.com/armanddomalewski/feature-etl-merge` | ETL lead, FRED unemployment scraping (Playwright), & pipeline merge |
