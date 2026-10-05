@@ -5,7 +5,7 @@ We want to see how local weather, unemployment rates and issued housing permits 
 
 | Name | GitHubID | Role / Focus |
 | --- | --- | --- |
-| Mikhail Vostrikov | `https://github.com/riceb53/House_price/tree/mikhail` | Zillow price data, ETL & report lead |
+| Mikhail Vostrikov  | `https://github.com/riceb53/House_price/tree/mikhail` | Zillow price data, ETL & reporting |
 | Gaziz Makhanov | `https://github.com/riceb53/House_price/tree/building-permits` | HUD permits API ingestion & FastAPI endpoints |
 | Jagriti Bisen | `https://github.com/riceb53/House_price/tree/feature/noaa-ingest` | NOAA weather data ingestion & Streamlit app dashboard |
 | Armand Domalewski | `https://github.com/armanddomalewski/feature-etl-merge` | ETL lead, FRED unemployment scraping (Playwright), & pipeline merge |
@@ -47,8 +47,8 @@ We join all four datasets on 5-digit county FIPS codes and the year. Monthly Zil
 
 ### 1. Clone the repository
 ```bash
-git clone https://github.com/ORG/REPO.git
-cd REPO
+git clone https://github.com/riceb53/House_price.git
+cd House_price
 ```
 
 ### 2. Configure environment variables
@@ -78,7 +78,6 @@ Make sure it writes the data in the bucket.
 ## Repository Structure
 ```
 House_price
-├── config.sh
 ├── fastapi
 │   ├── __pycache__
 │   │   └── permits_api.cpython-313.pyc
