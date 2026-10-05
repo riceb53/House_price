@@ -9,7 +9,7 @@ We want to see how local weather, unemployment rates and issued housing permits 
 | Gaziz Makhanov | `https://github.com/riceb53/House_price/tree/building-permits` | HUD permits API ingestion & FastAPI endpoints |
 | Jagriti Bisen | `https://github.com/riceb53/House_price/tree/feature/noaa-ingest` | NOAA weather data ingestion & Streamlit app dashboard |
 | Armand Domalewski | `https://github.com/armanddomalewski/feature-etl-merge` | ETL lead, FRED unemployment scraping (Playwright), & pipeline merge |
-| Brian Rice | `feature/reorganization` | DevOps / Infrastructure, GCP Cloud Run/Scheduler, Docker, & repo setup |
+| Brian Rice | `https://github.com/riceb53/House_price/tree/feature/reorganization` | DevOps / Infrastructure, GCP Cloud Run/Scheduler, Docker, & repo setup |
 ---
 
 ## Problem Statement
@@ -60,26 +60,30 @@ cp .env_template .env
 
 | Variable | Description | Example |
 | --- | --- | --- |
-| `GCP_SERVICE_ACCOUNT_KEY` | Absolute path to your service account JSON | `/Users/you/.ssh/key.json` |
-| `SOURCE_API_KEY` | Key for SOURCE NAME (free tier) | `abc123...` |
-| `API_SERVICE_URL` | Where the web app reaches the API | `http://api-server:8000` |
+| `GCP_PROJECT_ID` | GCP Project Id | `dsai692-section1123` |
+| `GCS_BUCKET_NAME` | GCS Bucket name | `some_example_bucket_name_house_price` |
 
 ### 4. How to call your endpoint
 To start the API server,
 ```python
-fastapi run mycode.py
+fastapi run fastapi/mycode.py
 ```
 
 ```python
-requests.post("http://localhost:8000/something", json=something)
+requests.get("http://localhost:8000/scrape_some_data")
 ```
 Make sure it writes the data in the bucket.
 
 ---
 ## Repository Structure
 ```
-.
-├── your_code.py
-├── .env_template
+House_price
+├── config.sh
+├── fastapi
+│   ├── __pycache__
+│   │   └── permits_api.cpython-313.pyc
+│   ├── permits_api.py
+│   └── requirements.txt
 └── README.md
+
 ```
