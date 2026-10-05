@@ -8,7 +8,7 @@ We want to see how local weather, unemployment rates and issued housing permits 
 | Mikhail Vostrikov | `https://github.com/riceb53/House_price/tree/mikhail` | Zillow price data, ETL & report lead |
 | Gaziz Makhanov | `https://github.com/riceb53/House_price/tree/building-permits` | HUD permits API ingestion & FastAPI endpoints |
 | Jagriti Bisen | `https://github.com/riceb53/House_price/tree/feature/noaa-ingest` | NOAA weather data ingestion & Streamlit app dashboard |
-| Armand Domalewski | `https://github.com/armanddomalewski/feature-etl-merge` | ETL lead, FRED unemployment scraping (Playwright), & pipeline merge |
+| Armand Domalewski | `https://github.com/riceb53/House_price/tree/feature/etl-merge` | ETL lead, FRED unemployment scraping (Playwright), & pipeline merge |
 | Brian Rice | `feature/brian-readme-edits` | DevOps / Infrastructure, GCP Cloud Run/Scheduler, Docker, & repo setup |
 ---
 
