@@ -56,7 +56,7 @@ cd House_price
 Copy the example file and fill in your own values:
 
 ```bash
-cp .env_template .env
+cp fastapi/.env_template fastapi/.env
 ```
 
 | Variable | Description | Example |
@@ -67,7 +67,7 @@ cp .env_template .env
 ### 3. How to call your endpoint
 To start the API server,
 ```python
-fastapi run fastapi/mycode.py
+fastapi run fastapi/permits_api.py
 ```
 
 ```python
