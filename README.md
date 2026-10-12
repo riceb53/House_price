@@ -8,8 +8,9 @@ We want to see how local weather, unemployment rates and issued housing permits 
 | Mikhail Vostrikov  | `https://github.com/riceb53/House_price/tree/mikhail` | Zillow price data, ETL & reporting |
 | Gaziz Makhanov | `https://github.com/riceb53/House_price/tree/building-permits` | HUD permits API ingestion & FastAPI endpoints |
 | Jagriti Bisen | `https://github.com/riceb53/House_price/tree/feature/noaa-ingest` | NOAA weather data ingestion & Streamlit app dashboard |
-| Armand Domalewski | `https://github.com/armanddomalewski/feature-etl-merge` | ETL lead, FRED unemployment scraping (Playwright), & pipeline merge |
+| Armand Domalewski | `https://github.com/riceb53/House_price/tree/feature/etl-merge` | ETL lead, FRED unemployment scraping (Playwright), & pipeline merge |
 | Brian Rice | `https://github.com/riceb53/House_price/tree/feature/reorganization` | DevOps / Infrastructure, GCP Cloud Run/Scheduler, Docker, & repo setup |
+
 ---
 
 ## Problem Statement
@@ -55,7 +56,7 @@ cd House_price
 Copy the example file and fill in your own values:
 
 ```bash
-cp .env_template .env
+cp fastapi/.env_template fastapi/.env
 ```
 
 | Variable | Description | Example |
@@ -66,7 +67,7 @@ cp .env_template .env
 ### 3. How to call your endpoint
 To start the API server,
 ```python
-fastapi run fastapi/mycode.py
+fastapi run fastapi/permits_api.py
 ```
 
 ```python
