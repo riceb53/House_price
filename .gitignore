@@ -8,3 +8,5 @@ houseprice-510122-*.json
 __pycache__/
 .DS_Store
 .venv/
+data/
+.env
