@@ -9,3 +9,5 @@ __pycache__/
 .DS_Store
 
 misc_data
+.venv/
+data/
