@@ -111,7 +111,7 @@ def main():
     yearly["ingested_at"] = datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
     output = OUTPUT_DIR / "weather_county_year.csv"
     yearly.to_csv(output, index=False)
-    bucket.blob("processed/noaa/weather_county_year.csv").upload_from_filename(str(output), content_type="text/csv")
+    bucket.blob("weather_county_year.csv").upload_from_filename(str(output), content_type="text/csv")
     print("Uploaded files to GCS")
     print("Saved", output, "with", len(yearly), "rows")
 
