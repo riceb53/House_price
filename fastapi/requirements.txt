@@ -3,3 +3,5 @@ requests
 google-cloud-storage
 python-dotenv
 playwright
+pandas
+numpy
