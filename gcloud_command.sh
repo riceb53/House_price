@@ -45,16 +45,22 @@ GCP_KEY_SECRET="group-hw3-gcp-key"
 SECRET_MOUNT_PATH="/run/secrets/gcp_key"
 
 SCHEDULER_JOB="collect-permits"
-SCHEDULE="0 1 1 * *"
+SCHEDULE="0 1 1 1 *"
 SCHEDULER_TZ="America/Los_Angeles"
-COLLECT_PATH="/scrape_some_data"
+COLLECT_PATH="/collect/permits"
 MESSAGE_BODY='{}'
 
-# SCHEDULER_JOB_2="collect-noaa-data"
-# SCHEDULE="0 0 * * *"
-# SCHEDULER_TZ="America/Los_Angeles"
-# COLLECT_PATH="/collect"
-# MESSAGE_BODY='{}'
+SCHEDULER_JOB_2="collect-noaa-data"
+SCHEDULE="0 1 1 * *"
+SCHEDULER_TZ="America/Los_Angeles"
+COLLECT_PATH="/collect/noaa"
+MESSAGE_BODY='{}'
+
+SCHEDULER_JOB_3="collect-zillow-data"
+SCHEDULE="0 1 1 1,4,7,10 *"
+SCHEDULER_TZ="America/Los_Angeles"
+COLLECT_PATH="/collect/zillow"
+MESSAGE_BODY='{}'
 # ─────────────────────────────────────────────────────────────────────────────
 
 # ─── validation ──────────────────────────────────────────────────────────────
@@ -191,7 +197,6 @@ deploy_scheduler() {
     --time-zone="$SCHEDULER_TZ" \
     --uri="${url}${COLLECT_PATH}" \
     --http-method=POST \
-    --headers="Content-Type=application/json" \
     --message-body="$MESSAGE_BODY"
 
   log "Triggering the job once so you can confirm it works"

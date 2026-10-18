@@ -16,6 +16,8 @@ OUTPUT_DIR = Path("data")
 load_dotenv()
 
 BUCKET_NAME = os.getenv("GCS_BUCKET_NAME")
+PROJECT_ID = os.getenv("GCP_PROJECT_ID")
+
 START_YEAR = 1980
 
 NOAA_TO_FIPS = {
@@ -89,7 +91,7 @@ def main():
     OUTPUT_DIR.mkdir(exist_ok=True)
     if not BUCKET_NAME:
         raise ValueError("Set GCS_BUCKET_NAME first")
-    bucket = storage.Client().bucket(BUCKET_NAME)
+    bucket = storage.Client(project=PROJECT_ID).bucket(BUCKET_NAME)
     date = requests.get(BASE_URL + "procdate.txt", timeout=60)
     date.raise_for_status()
     procdate = date.text.strip()
@@ -112,8 +114,7 @@ def main():
     output = OUTPUT_DIR / "weather_county_year.csv"
     yearly.to_csv(output, index=False)
     bucket.blob("weather_county_year.csv").upload_from_filename(str(output), content_type="text/csv")
-    print("Uploaded files to GCS")
-    print("Saved", output, "with", len(yearly), "rows")
+    return {"data": "ingested"}
 
 if __name__ == "__main__":
     main()

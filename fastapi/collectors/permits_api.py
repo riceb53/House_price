@@ -1,5 +1,6 @@
 import json
 import os
+import pandas as pd
 
 import requests
 from dotenv import load_dotenv
@@ -14,10 +15,6 @@ PROJECT_ID = os.environ["GCP_PROJECT_ID"]
 BUCKET = os.environ["GCS_BUCKET_NAME"]
 
 
-app = FastAPI()
-
-
-@app.post("/scrape_some_data")
 def scrape_data():
     features = []
     while True:
@@ -51,36 +48,4 @@ def scrape_data():
     # return {"saved_to": f"gs://{BUCKET}/permits.geojson", "counties": len(features)}
     return {"saved": "and formatted"}
 
-
-@app.get("/send_house_price_data_to_streamlit")
-def house_price_to_streamlit():
-    # get data from gcp, send to streamlit 
-    # what format should it be in?
-    # pdb.set_trace()    
-    client = storage.Client(project=PROJECT_ID)
-    blob = client.bucket(BUCKET).blob("permits.geojson")
-    data = json.loads(blob.download_as_text())
-    return data
-    # too much data for a browser, bit i think it's downloading entire csv.
-    # we should think about trimming down the data on gcp for this reason otherwise things will be real slow
-
-
-# upload zillow price data
-# @app.get("/send_zillow_price_data_to_streamlit")
-# def zillow_to_streamlit():
-
-
-# will need to modify this once we know which graphs we are making
-
-
-import pandas as pd
-import io
-
-@app.get("/send_weather_data_to_streamlit")
-def weather_to_streamlit():
-    # pdb.set_trace()
-    client = storage.Client(project=PROJECT_ID)
-    blob = client.bucket(BUCKET).blob("processed/noaa/weather_county_year.csv")
-    data = json.loads(blob.download_as_text())
-    return data
 
