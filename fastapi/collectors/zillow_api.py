@@ -21,15 +21,13 @@ file_name = "zillow_county_yearly.csv"
 url = ("https://files.zillowstatic.com/research/public_csvs/zhvi/"
        "County_zhvi_uc_sfrcondo_tier_0.33_0.67_sm_sa_month.csv")
 
-app = FastAPI()
-
 
 def store_to_gcs(service_account_key, project_id, bucket_name, file_name,
                  data):
     # same steps from class
-    credentials = service_account.Credentials.from_service_account_file(
-        service_account_key)
-    client = storage.Client(project=project_id, credentials=credentials)
+    # credentials = service_account.Credentials.from_service_account_file(
+        # service_account_key)
+    client = storage.Client(project=project_id)
     bucket = client.bucket(bucket_name)
     file = bucket.blob(file_name)
     file.upload_from_string(data, content_type="text/csv")
@@ -68,7 +66,6 @@ def get_zillow_data():
     return yearly
 
 
-@app.get("/zillow_prices")
 def zillow_prices():
     yearly = get_zillow_data()
     csv_data = yearly.to_csv(index=False)

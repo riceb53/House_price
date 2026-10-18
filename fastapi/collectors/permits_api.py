@@ -1,11 +1,11 @@
 import json
 import os
+import pandas as pd
 
 import requests
 from dotenv import load_dotenv
 from fastapi import FastAPI
 from google.cloud import storage
-import pdb
 
 load_dotenv()  # reads your settings from the .env file (see .env_template)
 
@@ -15,14 +15,10 @@ PROJECT_ID = os.environ["GCP_PROJECT_ID"]
 BUCKET = os.environ["GCS_BUCKET_NAME"]
 
 
-app = FastAPI()
-
-
-@app.get("/scrape_some_data")
 def scrape_data():
     features = []
     while True:
-        params = {"resultOffset": len(features), "orderByFields": "OBJECTID"}
+        params = {"resultOffset": len(features), "orderByFields": "OBJECTID", "returnGeometry": "false"}
         page = requests.get(URL, params=params, timeout=120).json()
         features += page["features"]
         if not page.get("properties", {}).get("exceededTransferLimit"):
@@ -52,37 +48,4 @@ def scrape_data():
     # return {"saved_to": f"gs://{BUCKET}/permits.geojson", "counties": len(features)}
     return {"saved": "and formatted"}
 
-
-@app.get("/send_house_price_data_to_streamlit")
-def house_price_to_streamlit():
-    # get data from gcp, send to streamlit 
-    # what format should it be in?
-    # url = "https://storage.googleapis.com/house_prices_bucket/permits.json"
-    # pdb.set_trace()    
-    client = storage.Client(project="houseprice-510122")
-    blob = client.bucket("house_prices_bucket").blob("permits.geojson")
-    data = json.loads(blob.download_as_text())
-    return data
-    # too much data for a browser, bit i think it's downloading entire csv.
-    # we should think about trimming down the data on gcp for this reason otherwise things will be real slow
-
-
-# upload zillow price data
-# @app.get("/send_zillow_price_data_to_streamlit")
-# def zillow_to_streamlit():
-
-
-# will need to modify this once we know which graphs we are making
-
-
-import pandas as pd
-import io
-
-@app.get("/send_weather_data_to_streamlit")
-def weather_to_streamlit():
-    # pdb.set_trace()
-    client = storage.Client(project="houseprice-510122")
-    blob = client.bucket("house_prices_bucket").blob("processed/noaa/weather_county_year.csv")
-    data = json.loads(blob.download_as_text())
-    return data
 
