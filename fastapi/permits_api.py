@@ -5,7 +5,6 @@ import requests
 from dotenv import load_dotenv
 from fastapi import FastAPI
 from google.cloud import storage
-import pdb
 
 load_dotenv()  # reads your settings from the .env file (see .env_template)
 
@@ -18,7 +17,7 @@ BUCKET = os.environ["GCS_BUCKET_NAME"]
 app = FastAPI()
 
 
-@app.get("/scrape_some_data")
+@app.post("/scrape_some_data")
 def scrape_data():
     features = []
     while True:
@@ -57,10 +56,9 @@ def scrape_data():
 def house_price_to_streamlit():
     # get data from gcp, send to streamlit 
     # what format should it be in?
-    # url = "https://storage.googleapis.com/house_prices_bucket/permits.json"
     # pdb.set_trace()    
-    client = storage.Client(project="houseprice-510122")
-    blob = client.bucket("house_prices_bucket").blob("permits.geojson")
+    client = storage.Client(project=PROJECT_ID)
+    blob = client.bucket(BUCKET).blob("permits.geojson")
     data = json.loads(blob.download_as_text())
     return data
     # too much data for a browser, bit i think it's downloading entire csv.
@@ -81,8 +79,8 @@ import io
 @app.get("/send_weather_data_to_streamlit")
 def weather_to_streamlit():
     # pdb.set_trace()
-    client = storage.Client(project="houseprice-510122")
-    blob = client.bucket("house_prices_bucket").blob("processed/noaa/weather_county_year.csv")
+    client = storage.Client(project=PROJECT_ID)
+    blob = client.bucket(BUCKET).blob("processed/noaa/weather_county_year.csv")
     data = json.loads(blob.download_as_text())
     return data
 
