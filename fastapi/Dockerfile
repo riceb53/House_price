@@ -5,6 +5,7 @@ WORKDIR /fastapi
 COPY . .
 
 RUN pip install -r requirements.txt
+RUN playwright install --with-deps chromium
 
 EXPOSE 8000
 
