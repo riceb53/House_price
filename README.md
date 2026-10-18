@@ -63,27 +63,58 @@ cp fastapi/.env_template fastapi/.env
 | --- | --- | --- |
 | `GCP_PROJECT_ID` | GCP Project Id | `dsai692-section1123` |
 | `GCS_BUCKET_NAME` | GCS Bucket name | `some_example_bucket_name_house_price` |
+| `GCP_SERVICE_ACCOUNT_KEY` | GCP Service account key | `some_example_bucket_name_house_price` |
 
 ### 3. How to call your endpoint
 To start the API server,
 ```python
-fastapi run fastapi/permits_api.py
+fastapi run fastapi/main.py
 ```
 
 ```python
-requests.get("http://localhost:8000/scrape_some_data")
+requests.post("http://localhost:8000/collect/permits")
 ```
 Make sure it writes the data in the bucket.
+
+### 4. Streamlit app
+To start the API server,
+```
+streamlit run streamlit/streamlit_app.py
+```
+Then visit localhost:8501 in your browser
+
+
+### 5. To deploy with docker and gcp
+```
+bash gcloud_command.sh
+```
 
 ---
 ## Repository Structure
 ```
 House_price
+.
+├── docs
+│   └── noaa_weather_schema.md
 ├── fastapi
-│   ├── __pycache__
-│   │   └── permits_api.cpython-313.pyc
-│   ├── permits_api.py
+│   ├── collectors
+│   │   ├── __init__.py
+│   │   ├── noaa_ingest.py
+│   │   ├── permits_api.py
+│   │   └── zillow_api.py
+│   ├── Dockerfile
+│   ├── main.py
 │   └── requirements.txt
-└── README.md
+├── Final Report.docx
+├── gcloud_command.sh
+├── misc_data
+│   ├── processed_noaa_weather_county_year.csv
+│   └── zillow_county_yearly.csv
+├── README.md
+└── streamlit
+    ├── Dockerfile
+    ├── edited_data.xlsx
+    ├── requirements.txt
+    └── streamlit_app.py
 
 ```
