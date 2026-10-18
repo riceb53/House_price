@@ -18,7 +18,7 @@ BUCKET = os.environ["GCS_BUCKET_NAME"]
 def scrape_data():
     features = []
     while True:
-        params = {"resultOffset": len(features), "orderByFields": "OBJECTID"}
+        params = {"resultOffset": len(features), "orderByFields": "OBJECTID", "returnGeometry": "false"}
         page = requests.get(URL, params=params, timeout=120).json()
         features += page["features"]
         if not page.get("properties", {}).get("exceededTransferLimit"):

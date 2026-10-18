@@ -25,9 +25,9 @@ url = ("https://files.zillowstatic.com/research/public_csvs/zhvi/"
 def store_to_gcs(service_account_key, project_id, bucket_name, file_name,
                  data):
     # same steps from class
-    credentials = service_account.Credentials.from_service_account_file(
-        service_account_key)
-    client = storage.Client(project=project_id, credentials=credentials)
+    # credentials = service_account.Credentials.from_service_account_file(
+        # service_account_key)
+    client = storage.Client(project=project_id)
     bucket = client.bucket(bucket_name)
     file = bucket.blob(file_name)
     file.upload_from_string(data, content_type="text/csv")

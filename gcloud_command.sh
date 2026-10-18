@@ -44,23 +44,21 @@ LOCAL_KEY_FILE="$GCP_SERVICE_ACCOUNT_KEY"
 GCP_KEY_SECRET="group-hw3-gcp-key"
 SECRET_MOUNT_PATH="/run/secrets/gcp_key"
 
+SCHEDULER_TZ="America/Los_Angeles"
+MESSAGE_BODY='{}'
+
 SCHEDULER_JOB="collect-permits"
 SCHEDULE="0 1 1 1 *"
-SCHEDULER_TZ="America/Los_Angeles"
 COLLECT_PATH="/collect/permits"
-MESSAGE_BODY='{}'
 
 SCHEDULER_JOB_2="collect-noaa-data"
-SCHEDULE="0 1 1 * *"
-SCHEDULER_TZ="America/Los_Angeles"
-COLLECT_PATH="/collect/noaa"
-MESSAGE_BODY='{}'
+SCHEDULE_2="0 1 1 * *"
+COLLECT_PATH_2="/collect/noaa"
 
 SCHEDULER_JOB_3="collect-zillow-data"
-SCHEDULE="0 1 1 1,4,7,10 *"
-SCHEDULER_TZ="America/Los_Angeles"
-COLLECT_PATH="/collect/zillow"
-MESSAGE_BODY='{}'
+SCHEDULE_3="0 1 1 1,4,7,10 *"
+COLLECT_PATH_3="/collect/zillow"
+
 # ─────────────────────────────────────────────────────────────────────────────
 
 # ─── validation ──────────────────────────────────────────────────────────────
@@ -132,9 +130,10 @@ deploy_api() {
     --region "$REGION" \
     --port="$API_PORT" \
     --allow-unauthenticated \
-    --timeout=300 \
+    --timeout=600 \
+    --memory=2Gi \
     --max-instances=1 \
-    --set-env-vars=GCP_PROJECT_ID="$PROJECT_ID",GCS_BUCKET_NAME="$BUCKET_NAME" \
+    --set-env-vars=GCP_PROJECT_ID="$PROJECT_ID",GCS_BUCKET_NAME="$BUCKET_NAME",GCP_SERVICE_ACCOUNT_KEY="$SECRET_MOUNT_PATH" \
     --set-secrets="$SECRET_MOUNT_PATH=$GCP_KEY_SECRET:latest"
 
   # .env points GCP_SERVICE_ACCOUNT_KEY at a path on your laptop.
@@ -205,6 +204,18 @@ deploy_scheduler() {
   echo "  gcloud run services logs read ${API_SERVICE} --region=${REGION} --limit=50"
 }
 
+deploy_schedulers() {
+  deploy_scheduler
+  SCHEDULER_JOB="$SCHEDULER_JOB_2" SCHEDULE="$SCHEDULE_2" COLLECT_PATH="$COLLECT_PATH_2" deploy_scheduler
+  SCHEDULER_JOB="$SCHEDULER_JOB_3" SCHEDULE="$SCHEDULE_3" COLLECT_PATH="$COLLECT_PATH_3" deploy_scheduler
+}
+
+deploy_schedulers() {
+  deploy_scheduler
+  SCHEDULER_JOB="$SCHEDULER_JOB_2" SCHEDULE="$SCHEDULE_2" COLLECT_PATH="$COLLECT_PATH_2" deploy_scheduler
+  SCHEDULER_JOB="$SCHEDULER_JOB_3" SCHEDULE="$SCHEDULE_3" COLLECT_PATH="$COLLECT_PATH_3" deploy_scheduler
+}
+
 show_urls() {
   echo "API     : $(api_url)"
   echo "Web app : $(gcloud run services describe "$WEB_SERVICE" \
@@ -213,11 +224,11 @@ show_urls() {
 
 # ─── entry point ─────────────────────────────────────────────────────────────
 case "${1:-all}" in
-  all)       bootstrap; deploy_api; deploy_web; deploy_scheduler; show_urls ;;
+  all)       bootstrap; deploy_api; deploy_web; deploy_schedulers; show_urls ;;
   bootstrap) bootstrap ;;
   api)       deploy_api ;;
   web)       deploy_web ;;
-  scheduler) deploy_scheduler ;;
+  scheduler) deploy_schedulers ;;
   urls)      show_urls ;;
   *) echo "usage: $0 {all|bootstrap|api|web|scheduler|urls}" >&2; exit 1 ;;
 esac
